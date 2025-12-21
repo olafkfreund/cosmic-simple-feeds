@@ -46,9 +46,9 @@ cargo install just
    cd cosmic-simple-feeds
    git submodule update --init --recursive
    ```
-   ...
+   ```bash
 2. sudo cargo build --release
-   ...
+   ```
 3. Instale o applet:
    ```bash
    sudo just install
