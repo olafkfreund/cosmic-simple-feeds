@@ -11,17 +11,31 @@ for network parsing.
 Prerequisites
 -------------
 
-To install Cosmic Desktop, you need the following dependencies:
+To build the applet, you need the following dependencies:
 
-### System Dependencies
-- **Rust**: Install via [rustup](https://rustup.rs/)
-- **Just**: Install via Cargo: `cargo install just`
-- **System Libraries**:
-  - For Debian/Ubuntu: `sudo apt install libdbus-3.0-dev libgtk-3-dev`
-  - For Fedora: `sudo dnf install dbus-devel gtk3-devel`
-  - For Arch: `sudo pacman -S dbus gtk3`
-- **libcosmic**: Install via Cargo: `cargo install libcosmic`
-- **iced**: Install via Cargo: `cargo install iced`
+### 1. Install Rust, Cargo, and Just
+
+#### Arch Linux
+```bash
+sudo pacman -S rust just 
+```
+
+#### Fedora
+```bash
+sudo dnf install rust cargo just
+```
+
+#### Pop!_OS / Ubuntu
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo install just
+```
+
+### 2. System Libraries
+- **Pop!_OS / Ubuntu / Debian**: `sudo apt install libdbus-3.0-dev libgtk-3-dev`
+- **Fedora**: `sudo dnf install dbus-devel gtk3-devel`
+- **Arch Linux**: `sudo pacman -S dbus gtk3`
+
 - **reqwest** and **rss**: These are included in the project's dependencies, so they'll be installed when you run `just`.
 
 ### Installation Steps
@@ -31,13 +45,14 @@ To install Cosmic Desktop, you need the following dependencies:
    cd cosmic-simple-feeds
    git submodule update --init --recursive
    ```
+2. sudo cargo build --release
 
-2. Install the applet:
+3. Install the applet:
    ```bash
    sudo just install
    ```
 
-3. If the applet icon is cached, log out and back in to refresh the session.
+4. If the applet icon is cached, log out and back in to refresh the session.
 
 Configuration
 -------------

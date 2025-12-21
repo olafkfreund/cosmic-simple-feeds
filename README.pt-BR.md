@@ -1,55 +1,70 @@
+````markdown
 Feeds — Applet COSMIC (Português)
-================================
+=================================
 
 Descrição curta
 ---------------
 
-Applet para painel COSMIC que busca e mostra itens de feeds RSS/Atom.
-Usa `libcosmic` + `iced` para a UI e `reqwest` + `rss` para rede e parsing.
+Este é um pequeno applet para o painel COSMIC que busca e exibe itens de
+feeds RSS/Atom. Ele usa `libcosmic` + `iced` para a interface do usuário e
+`reqwest` + `rss` para análise de rede.
 
 Pré-requisitos
 --------------
 
-Certifique-se de ter Rust, Just e as bibliotecas do sistema instaladas.
+Para compilar o applet, você precisa das seguintes dependências:
 
-### 1. Instalar Rust e Just
+### 1. Instalar Rust, Cargo e Just
+
+#### Arch Linux
 ```bash
-# Instalar Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+sudo pacman -S rust just 
+```
 
-# Instalar Just
+#### Fedora
+```bash
+sudo dnf install rust cargo just
+```
+
+#### Pop!_OS / Ubuntu
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install just
 ```
 
-### Dependências do Sistema
-- **Rust**: Instale via [rustup](https://rustup.rs/)
-- **Just**: Instale via Cargo: `cargo install just`
-- **Bibliotecas do Sistema**:
-  - Para Debian/Ubuntu: `sudo apt install libdbus-3.0-dev libgtk-3-dev`
-  - Para Fedora: `sudo dnf install dbus-devel gtk3-devel`
-  - Para Arch: `sudo pacman -S dbus gtk3`
-- **libcosmic**: Instale via Cargo: `cargo install libcosmic`
-- **iced**: Instale via Cargo: `cargo install iced`
-- **reqwest** e **rss**: Estas bibliotecas são incluídas nas dependências do projeto, então são instaladas automaticamente quando você executar `just`.
+### 2. Bibliotecas do Sistema
+- **Pop!_OS / Ubuntu / Debian**: `sudo apt install libdbus-3.0-dev libgtk-3-dev`
+- **Fedora**: `sudo dnf install dbus-devel gtk3-devel`
+- **Arch Linux**: `sudo pacman -S dbus gtk3`
 
-Compilar e Instalar
--------------------
+- **reqwest** e **rss**: Estas dependências estão incluídas no projeto, elas serão instaladas quando você executar `just`.
 
-Clone o repositório e use o just para instalar:
+### Etapas de Instalação
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/marcossl10/cosmic-simple-feeds.git
+   cd cosmic-simple-feeds
+   git submodule update --init --recursive
+   ```
+2. sudo cargo build --release
 
-```bash
-git clone https://github.com/marcossl10/cosmic-simple-feeds.git
-cd cosmic-simple-feeds
-git submodule update --init --recursive
-just
-sudo just install
-```
+3. Instale o applet:
+   ```bash
+   sudo just install
+   ```
 
-Se o ícone do applet permanecer em cache no painel COSMIC após a instalação, faça logout/login para forçar a atualização da sessão.
+4. Se o ícone do applet estiver em cache, saia e entre novamente para atualizar a sessão.
 
 Configuração
-------------
+-------------
 
-O app usa `cosmic-config` para persistir os feeds do usuário. Por
-padrão vem com um feed de exemplo; gerencie feeds pela opção
-"Gerenciar" no popup do applet.
+O aplicativo usa `cosmic-config` para persistir os feeds do usuário. Por padrão,
+ele inclui um feed de exemplo; gerencie os feeds a partir da visualização "Gerenciar"
+no popup do applet.
+
+Desenvolvedores devem instalar [rustup][rustup] e considerar o uso de
+`rust-analyzer` em seu editor.
+
+[rustup]: https://rustup.rs/
+[rust-analyzer]: https://rust-analyzer.github.io/
+````
