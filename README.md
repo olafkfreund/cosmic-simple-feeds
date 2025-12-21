@@ -45,8 +45,9 @@ cargo install just
    cd cosmic-simple-feeds
    git submodule update --init --recursive
    ``` 
+2. Build:
    ```bash
-2. sudo cargo build --release
+   sudo cargo build --release
    ```
 
 3. Install the applet:
@@ -54,7 +55,7 @@ cargo install just
    sudo just install
    ```
 
-4. If the applet icon is cached, log out and back in to refresh the session.
+5. If the applet icon is cached, log out and back in to refresh the session.
 
 Configuration
 -------------
