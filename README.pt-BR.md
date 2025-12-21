@@ -36,8 +36,8 @@ padrão vem com um feed de exemplo; gerencie feeds pela opção
 Contribuindo
 ------------
 
-Abra issues ou pull requests à vontade. O projeto usa a licença
-MPL-2.0 (veja `LICENSE`).
+Abra issues ou pull requests à vontade. O projeto é licenciado sob a
+licença MIT (veja `LICENSE`).
 
 Licença
 -------
