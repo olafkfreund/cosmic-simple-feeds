@@ -44,8 +44,10 @@ cargo install just
    git clone https://github.com/marcossl10/cosmic-simple-feeds.git
    cd cosmic-simple-feeds
    git submodule update --init --recursive
-   ```
+   ``` 
+   ...
 2. sudo cargo build --release
+   ...
 
 3. Install the applet:
    ```bash
