@@ -11,30 +11,33 @@ for network parsing.
 Prerequisites
 -------------
 
-Make sure you have Rust and Just installed on your system:
+To install Cosmic Desktop, you need the following dependencies:
 
-```bash
-# Install Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+### System Dependencies
+- **Rust**: Install via [rustup](https://rustup.rs/)
+- **Just**: Install via Cargo: `cargo install just`
+- **System Libraries**:
+  - For Debian/Ubuntu: `sudo apt install libdbus-3.0-dev libgtk-3-dev`
+  - For Fedora: `sudo dnf install dbus-devel gtk3-devel`
+  - For Arch: `sudo pacman -S dbus gtk3`
+- **libcosmic**: Install via Cargo: `cargo install libcosmic`
+- **iced**: Install via Cargo: `cargo install iced`
+- **reqwest** and **rss**: These are included in the project's dependencies, so they'll be installed when you run `just`.
 
-# Install Just
-cargo install just
-```
+### Installation Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/marcossl10/cosmic-simple-feeds.git
+   cd cosmic-simple-feeds
+   git submodule update --init --recursive
+   ```
 
-Compile and Install
--------------------
+2. Install the applet:
+   ```bash
+   sudo just install
+   ```
 
-Clone the repository and use just to install:
-
-```bash
-git clone https://github.com/marcossl10/cosmic-simple-feeds.git
-cd cosmic-simple-feeds
-git submodule update --init --recursive
-just
-sudo just install
-```
-
-If the applet icon appears cached in your COSMIC panel after install, log out and log back in to refresh the session.
+3. If the applet icon is cached, log out and back in to refresh the session.
 
 Configuration
 -------------
@@ -42,12 +45,6 @@ Configuration
 The application uses `cosmic-config` to persist user feeds. By default
 it includes a sample feed; manage feeds from the popup "Gerenciar"
 view inside the applet.
-
-Contributing
-------------
-
-Feel free to open issues or pull requests. The project is licensed
-under the MIT License (see `LICENSE`).
 
 Developers should install [rustup][rustup] and consider using
 `rust-analyzer` in their editor.
