@@ -8,15 +8,33 @@ This is a small COSMIC panel applet that fetches and displays RSS/Atom
 feed items. It uses `libcosmic` + `iced` for UI and `reqwest` + `rss`
 for network parsing.
 
-Build & install
----------------
+Prerequisites
+-------------
 
-Build with Cargo or use the provided `justfile` for convenience:
+Make sure you have Rust and Just installed on your system:
 
 ```bash
-cargo build --release
+# Install Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Install Just
+cargo install just
+```
+
+Compile and Install
+-------------------
+
+Clone the repository and use just to install:
+
+```bash
+git clone https://github.com/marcossl10/cosmic-simple-feeds.git
+cd cosmic-simple-feeds
+git submodule update --init --recursive
+just
 sudo just install
 ```
+
+If the applet icon appears cached in your COSMIC panel after install, log out and log back in to refresh the session.
 
 Configuration
 -------------
