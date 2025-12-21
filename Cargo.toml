@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 license = "MIT"
 description = "An application for the COSMIC™ desktop"
-repository = "https://github.com/pop-os/cosmic-app-template"
+repository = "https://github.com/marcossl10/cosmic-simple-feeds"
 
 [dependencies]
 futures-util = "0.3.31"

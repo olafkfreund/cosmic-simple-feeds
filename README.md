@@ -18,13 +18,6 @@ cargo build --release
 sudo just install
 ```
 
-Run
----
-
-After installing, add the applet to your COSMIC panel (application
-entry: `com.github-pop-os.cosmic-app-template`). If the panel shows a
-cached icon, try logging out and logging back in to refresh the session.
-
 Configuration
 -------------
 

@@ -1,5 +1,5 @@
 name := 'feeds'
-appid := 'com.github-pop-os.cosmic-app-template'
+appid := 'com.github-marcossl10.cosmic-simple-feeds'
 
 rootdir := ''
 prefix := '/usr'

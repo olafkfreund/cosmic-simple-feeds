@@ -2,7 +2,7 @@
 Name=Feeds
 Comment=An application for the COSMIC™ desktop
 Type=Application
-Icon=com.github-pop-os.cosmic-app-template
+Icon=com.github-marcossl10.cosmic-simple-feeds
 Exec=feeds %F
 Terminal=false
 StartupNotify=true

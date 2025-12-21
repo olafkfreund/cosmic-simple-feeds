@@ -17,14 +17,6 @@ cargo build --release
 sudo just install
 ```
 
-Executar
---------
-
-Após instalar, adicione o applet ao painel COSMIC (entrada de
-aplicação: `com.github-pop-os.cosmic-app-template`). Se o painel mostrar
-um ícone em cache, faça logout/login para forçar a atualização da
-sessão.
-
 Configuração
 ------------
 

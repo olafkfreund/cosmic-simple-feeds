@@ -47,7 +47,7 @@ impl cosmic::Application for AppModel {
     type Flags = crate::config::Config;
     type Message = Message;
 
-    const APP_ID: &'static str = "com.github.pop-os.cosmic-app-template";
+    const APP_ID: &'static str = "com.github.marcossl10.cosmic-simple-feeds";
 
     fn init(core: Core, flags: crate::config::Config) -> (Self, Task<Message>) {
         let cosmic_cfg = cosmic::cosmic_config::Config::new(
