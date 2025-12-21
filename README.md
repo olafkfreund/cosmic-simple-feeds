@@ -5,8 +5,8 @@ Short description
 -----------------
 
 This is a small COSMIC panel applet that fetches and displays RSS/Atom
-feed items. It was adapted from the COSMIC app template and uses
-`libcosmic` + `iced` for UI and `reqwest` + `rss` for network parsing.
+feed items. It uses `libcosmic` + `iced` for UI and `reqwest` + `rss`
+for network parsing.
 
 Build & install
 ---------------

@@ -5,8 +5,7 @@ Descrição curta
 ---------------
 
 Applet para painel COSMIC que busca e mostra itens de feeds RSS/Atom.
-Baseado no template do COSMIC, usa `libcosmic` + `iced` para a UI e
-`reqwest` + `rss` para rede e parsing.
+Usa `libcosmic` + `iced` para a UI e `reqwest` + `rss` para rede e parsing.
 
 Compilar & instalar
 -------------------
