@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Feeds
+Comment=An application for the COSMIC™ desktop
+Type=Application
+Icon=com.github-pop-os.cosmic-app-template
+Exec=feeds %F
+Terminal=false
+StartupNotify=true
+Categories=COSMIC
+Keywords=COSMIC
+NoDisplay=true
+X-CosmicApplet=true
+X-CosmicHoverPopup=Auto
+MimeType=

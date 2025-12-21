@@ -1,0 +1,34 @@
+# Rust / Cargo
+/target/
+/**/target/
+/debug/
+**/*.rs.bk
+Cargo.lock
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+
+# Misc
+.DS_Store
+dist/
+
+# Icons and generated assets (optional; keep if you want them tracked)
+# resources/icons/hicolor/
+.cargo/
+*.pdb
+**/*.rs.bk
+debug/
+target/
+vendor/
+vendor.tar
+debian/*
+!debian/changelog
+!debian/control
+!debian/copyright
+!debian/install
+!debian/rules
+!debian/source
