@@ -1,8 +1,7 @@
 use cosmic::app::{Core, Task};
 use cosmic::iced::{Alignment, Length, window::Id, time, Subscription};
 use cosmic::surface::action::{app_popup, destroy_popup};
-use cosmic::widget::{button, container, scrollable, text, Column};
-use cosmic::iced::widget::text_input;
+use cosmic::widget::{button, container, scrollable, text, text_input, Column};
 use cosmic::cosmic_config::CosmicConfigEntry;
 use cosmic::Element;
 use std::time::Duration;
@@ -145,7 +144,18 @@ impl cosmic::Application for AppModel {
             Message::AddFeed => {
                 let s = self.new_feed.trim();
                 if !s.is_empty() {
-                    self.config.feeds.push(s.to_string());
+                    let mut url = if s.starts_with("http://") || s.starts_with("https://") {
+                        s.to_string()
+                    } else {
+                        format!("https://{}", s)
+                    };
+
+                    // Correção automática para URLs do Google News (adiciona /rss/)
+                    if url.contains("news.google.com") && !url.contains("/rss/") {
+                        url = url.replace("news.google.com/", "news.google.com/rss/");
+                    }
+
+                    self.config.feeds.push(url);
                     self.new_feed.clear();
                     // persist
                     if let Some(cfg) = &self.cosmic_cfg {
@@ -216,12 +226,6 @@ impl cosmic::Application for AppModel {
                                 width: bounds.width as i32,
                                 height: bounds.height as i32,
                             };
-                                popup_settings.positioner.anchor_rect = cosmic::iced::Rectangle {
-                                    x: (bounds.x - offset.x) as i32,
-                                    y: (bounds.y - offset.y) as i32,
-                                    width: bounds.width as i32,
-                                    height: bounds.height as i32,
-                                };
 
                             popup_settings
                         },
@@ -255,7 +259,7 @@ impl cosmic::Application for AppModel {
                                 // add input
                                 let input = text_input("Nova URL de feed", &state.new_feed)
                                     .on_input(Message::FeedInputChanged)
-                                    .on_submit(Message::AddFeed)
+                                    .on_submit(|_| Message::AddFeed)
                                     .width(Length::Fill)
                                     .padding(6);
 
@@ -329,10 +333,28 @@ impl cosmic::Application for AppModel {
 fn fetch_feed(url: String) -> Task<Message> {
     Task::perform(
         async move {
-            let resp = reqwest::get(&url).await.map_err(|e| e.to_string())?;
+            let client = reqwest::Client::builder()
+                .user_agent("cosmic-simple-feeds")
+                .build()
+                .map_err(|e| e.to_string())?;
+            let resp = client.get(&url).send().await.map_err(|e| e.to_string())?;
+
+            if !resp.status().is_success() {
+                return Err(format!("Erro HTTP {}: {}", resp.status(), url));
+            }
+
             let bytes = resp.bytes().await.map_err(|e| e.to_string())?;
-            let channel = Channel::read_from(&bytes[..]).map_err(|e| e.to_string())?;
-            Ok(channel)
+            match Channel::read_from(&bytes[..]) {
+                Ok(channel) => Ok(channel),
+                Err(e) => {
+                    let body = String::from_utf8_lossy(&bytes);
+                    let body_trim = body.trim_start().to_lowercase();
+                    if body_trim.starts_with("<!doctype html") || body_trim.starts_with("<html") {
+                        return Err("A URL fornecida é uma página Web e não um feed RSS válido.".to_string());
+                    }
+                    Err(format!("Erro ao ler feed: {}. (Verifique se é RSS e não Atom)", e))
+                }
+            }
         },
         |res| Message::FeedLoaded(res).into(),
     )
