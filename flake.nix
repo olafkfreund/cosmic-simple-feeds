@@ -21,11 +21,24 @@
         pkgs = nixpkgs.legacyPackages.${system};
         craneLib = crane.mkLib pkgs;
 
+        # Include i18n/ and resources/ alongside Rust sources
+        srcFilter =
+          path: type:
+          (craneLib.filterCargoSources path type)
+          || (builtins.match ".*\\.ftl$" path != null)
+          || (builtins.match ".*\\.desktop$" path != null)
+          || (builtins.match ".*\\.svg$" path != null)
+          || (builtins.match ".*\\.xml$" path != null)
+          || (builtins.match ".*i18n\\.toml$" path != null);
+
         cosmic-simple-feeds = craneLib.buildPackage {
           pname = "cosmic-simple-feeds";
           version = "0.1.0";
 
-          src = craneLib.cleanCargoSource ./.;
+          src = pkgs.lib.cleanSourceWith {
+            src = ./.;
+            filter = srcFilter;
+          };
 
           strictDeps = true;
 
