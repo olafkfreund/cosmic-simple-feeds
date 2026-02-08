@@ -1,7 +1,6 @@
 use thiserror::Error;
 
 #[derive(Debug, Error, Clone)]
-#[allow(dead_code)]
 pub enum FeedError {
     #[error("HTTP request failed: {0}")]
     Request(String),

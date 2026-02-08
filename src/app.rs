@@ -43,6 +43,14 @@ pub enum Message {
     RemoveFeed(usize),
 }
 
+impl AppModel {
+    fn save_feeds(&mut self) {
+        if let Some(cfg) = &self.cosmic_cfg {
+            let _ = self.config.set_feeds(cfg, self.config.feeds.clone());
+        }
+    }
+}
+
 impl cosmic::Application for AppModel {
     type Executor = cosmic::executor::Default;
     type Flags = crate::config::Config;
@@ -105,7 +113,7 @@ impl cosmic::Application for AppModel {
     fn update(&mut self, message: Message) -> Task<Message> {
         match message {
             Message::PopupClosed(id) => {
-                if self.popup.as_ref() == Some(&id) {
+                if self.popup == Some(id) {
                     self.popup = None;
                 }
                 Task::none()
@@ -172,7 +180,7 @@ impl cosmic::Application for AppModel {
                     let mut url = if s.starts_with("http://") || s.starts_with("https://") {
                         s.to_string()
                     } else {
-                        format!("https://{}", s)
+                        format!("https://{s}")
                     };
 
                     if url.contains("news.google.com") && !url.contains("/rss/") {
@@ -186,9 +194,7 @@ impl cosmic::Application for AppModel {
 
                     self.config.feeds.push(url);
                     self.new_feed.clear();
-                    if let Some(cfg) = &self.cosmic_cfg {
-                        let _ = self.config.set_feeds(cfg, self.config.feeds.clone());
-                    }
+                    self.save_feeds();
                     self.state = State::Loading;
                     return fetch_all_feeds(self.config.feeds.clone());
                 }
@@ -197,9 +203,7 @@ impl cosmic::Application for AppModel {
             Message::RemoveFeed(idx) => {
                 if idx < self.config.feeds.len() {
                     self.config.feeds.remove(idx);
-                    if let Some(cfg) = &self.cosmic_cfg {
-                        let _ = self.config.set_feeds(cfg, self.config.feeds.clone());
-                    }
+                    self.save_feeds();
                     if self.config.feeds.is_empty() {
                         self.items.clear();
                         self.state = State::Loaded;
@@ -276,10 +280,10 @@ impl cosmic::Application for AppModel {
                                 let mut feeds_col = Column::new()
                                     .spacing(sp.space_xs)
                                     .padding([sp.space_xs, sp.space_xxs]);
-                                for (i, f) in state.config.feeds.iter().enumerate() {
+                                for (i, feed_url) in state.config.feeds.iter().enumerate() {
                                     let row = Column::new()
                                         .spacing(sp.space_xxs)
-                                        .push(text(f).size(sp.space_m))
+                                        .push(text(feed_url).size(sp.space_m))
                                         .push(
                                             button::text(fl!("remove"))
                                                 .on_press(Message::RemoveFeed(i))

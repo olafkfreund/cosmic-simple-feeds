@@ -14,11 +14,7 @@ in
     enable = lib.mkEnableOption "COSMIC Simple Feeds RSS applet";
 
     package = lib.mkPackageOption pkgs "cosmic-simple-feeds" {
-      default =
-        if flake ? packages.${pkgs.stdenv.hostPlatform.system}.cosmic-simple-feeds then
-          flake.packages.${pkgs.stdenv.hostPlatform.system}.cosmic-simple-feeds
-        else
-          pkgs.cosmic-simple-feeds;
+      default = flake.packages.${pkgs.stdenv.hostPlatform.system}.cosmic-simple-feeds;
     };
   };
 
