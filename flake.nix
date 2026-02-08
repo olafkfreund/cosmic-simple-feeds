@@ -31,15 +31,15 @@
           || (builtins.match ".*\\.xml$" path != null)
           || (builtins.match ".*i18n\\.toml$" path != null);
 
-        cosmic-simple-feeds = craneLib.buildPackage {
+        src = pkgs.lib.cleanSourceWith {
+          src = ./.;
+          filter = srcFilter;
+        };
+
+        commonArgs = {
+          inherit src;
           pname = "cosmic-simple-feeds";
           version = "0.1.0";
-
-          src = pkgs.lib.cleanSourceWith {
-            src = ./.;
-            filter = srcFilter;
-          };
-
           strictDeps = true;
 
           nativeBuildInputs = with pkgs; [
@@ -59,39 +59,59 @@
             openssl
           ];
 
-          # Let cargo handle the build, not just
           dontUseJustBuild = true;
           dontUseJustCheck = true;
           dontUseJustInstall = true;
-
-          postInstall =
-            let
-              appid = "com.github-marcossl10.cosmic-simple-feeds";
-            in
-            ''
-              install -Dm0644 resources/app.desktop \
-                $out/share/applications/${appid}.desktop
-              install -Dm0644 resources/app.metainfo.xml \
-                $out/share/metainfo/${appid}.metainfo.xml
-              install -Dm0644 resources/icons/hicolor/scalable/apps/${appid}.svg \
-                $out/share/icons/hicolor/scalable/apps/${appid}.svg
-              install -Dm0644 resources/icons/hicolor/scalable/apps/${appid}-symbolic.svg \
-                $out/share/icons/hicolor/symbolic/apps/${appid}-symbolic.svg
-            '';
-
-          meta = with pkgs.lib; {
-            description = "RSS feed applet for the COSMIC Desktop Environment";
-            homepage = "https://github.com/marcossl10/cosmic-simple-feeds";
-            license = licenses.mit;
-            platforms = platforms.linux;
-            mainProgram = "feeds";
-          };
         };
+
+        cargoArtifacts = craneLib.buildDepsOnly commonArgs;
+
+        cosmic-simple-feeds = craneLib.buildPackage (
+          commonArgs
+          // {
+            inherit cargoArtifacts;
+
+            postInstall =
+              let
+                appid = "com.github-marcossl10.cosmic-simple-feeds";
+              in
+              ''
+                install -Dm0644 resources/app.desktop \
+                  $out/share/applications/${appid}.desktop
+                install -Dm0644 resources/app.metainfo.xml \
+                  $out/share/metainfo/${appid}.metainfo.xml
+                install -Dm0644 resources/icons/hicolor/scalable/apps/${appid}.svg \
+                  $out/share/icons/hicolor/scalable/apps/${appid}.svg
+                install -Dm0644 resources/icons/hicolor/scalable/apps/${appid}-symbolic.svg \
+                  $out/share/icons/hicolor/symbolic/apps/${appid}-symbolic.svg
+              '';
+
+            meta = with pkgs.lib; {
+              description = "RSS feed applet for the COSMIC Desktop Environment";
+              homepage = "https://github.com/marcossl10/cosmic-simple-feeds";
+              license = licenses.mit;
+              platforms = platforms.linux;
+              mainProgram = "feeds";
+            };
+          }
+        );
       in
       {
         packages = {
           inherit cosmic-simple-feeds;
           default = cosmic-simple-feeds;
+        };
+
+        checks = {
+          inherit cosmic-simple-feeds;
+
+          clippy = craneLib.cargoClippy (
+            commonArgs
+            // {
+              inherit cargoArtifacts;
+              cargoClippyExtraArgs = "--all-targets -- -D warnings";
+            }
+          );
         };
 
         devShells.default = craneLib.devShell {
