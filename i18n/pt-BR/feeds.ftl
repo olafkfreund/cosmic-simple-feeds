@@ -1,0 +1,13 @@
+app-title = Feeds
+applet-label = News
+tooltip = Feeds
+popup-title = Meus Feeds RSS
+manage = Gerenciar
+done = Feito
+remove = Remover
+add = Adicionar
+feed-input-placeholder = Nova URL de feed
+loading = Carregando notícias...
+error = Erro: {$message}
+no-items = Nenhum item encontrado.
+untitled = Sem título

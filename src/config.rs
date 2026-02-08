@@ -13,7 +13,7 @@ impl Default for Config {
     fn default() -> Self {
         Config {
             feeds: vec![
-                "https://news.google.com/rss/search?q=tecnologia&hl=pt-BR&gl=BR&ceid=BR:pt-419".to_string(),
+                "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en".to_string(),
             ],
             refresh_interval_seconds: 300,
         }

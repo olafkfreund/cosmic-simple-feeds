@@ -9,11 +9,13 @@ repository = "https://github.com/marcossl10/cosmic-simple-feeds"
 [dependencies]
 futures-util = "0.3.31"
 i18n-embed-fl = "0.10"
-rust-embed = "8.7.2"
-tokio = { version = "1.48.0", features = ["full"] }
-reqwest = { version = "0.11", features = ["json"] }
+reqwest = "0.12"
 rss = "2.0"
+rust-embed = "8.7.2"
+thiserror = "2"
+tokio = { version = "1.48", features = ["rt"] }
 open = "5.0"
+url = "2"
 
 [dependencies.i18n-embed]
 version = "0.16"

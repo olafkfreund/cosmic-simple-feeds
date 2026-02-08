@@ -2,6 +2,8 @@
 
 mod app;
 mod config;
+mod error;
+mod feed;
 mod i18n;
 
 use cosmic::Application;
