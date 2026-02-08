@@ -55,16 +55,15 @@ pub fn validate_url(url: &str) -> Result<(), FeedError> {
         _ => return Err(FeedError::InvalidUrl(format!("unsupported scheme: {}", parsed.scheme()))),
     }
 
-    if let Some(host) = parsed.host_str() {
-        if host == "localhost"
+    if let Some(host) = parsed.host_str()
+        && (host == "localhost"
             || host.starts_with("127.")
             || host.starts_with("10.")
             || host.starts_with("192.168.")
             || host == "0.0.0.0"
-            || host == "[::1]"
-        {
-            return Err(FeedError::InvalidUrl("private/local addresses not allowed".to_string()));
-        }
+            || host == "[::1]")
+    {
+        return Err(FeedError::InvalidUrl("private/local addresses not allowed".to_string()));
     }
 
     Ok(())
@@ -96,14 +95,13 @@ async fn fetch(client: &reqwest::Client, url: String) -> Result<Channel, FeedErr
         });
     }
 
-    // Check Content-Length header if present
-    if let Some(len) = resp.content_length() {
-        if len as usize > MAX_RESPONSE_BYTES {
-            return Err(FeedError::Request(format!(
-                "response too large: {} bytes (max {})",
-                len, MAX_RESPONSE_BYTES
-            )));
-        }
+    if let Some(len) = resp.content_length()
+        && len as usize > MAX_RESPONSE_BYTES
+    {
+        return Err(FeedError::Request(format!(
+            "response too large: {} bytes (max {})",
+            len, MAX_RESPONSE_BYTES
+        )));
     }
 
     let bytes = resp

@@ -363,7 +363,7 @@ impl cosmic::Application for AppModel {
             btn,
             "Feeds",
             self.popup.is_some(),
-            |a| Message::Surface(a),
+            Message::Surface,
             None,
         ))
     }
