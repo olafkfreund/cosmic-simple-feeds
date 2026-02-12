@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Feeds
-Comment=An application for the COSMIC™ desktop
+Comment=RSS feed reader applet for the COSMIC™ desktop
 Type=Application
-Icon=com.github-marcossl10.cosmic-simple-feeds
+Icon=io.github-olafkfreund.cosmic-ext-applet-feeds
 Exec=feeds %F
 Terminal=false
 StartupNotify=true

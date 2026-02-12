@@ -1,5 +1,5 @@
 {
-  description = "RSS feed applet for the COSMIC Desktop Environment";
+  description = "RSS feed reader applet for the COSMIC™ desktop";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -38,7 +38,7 @@
 
         commonArgs = {
           inherit src;
-          pname = "cosmic-simple-feeds";
+          pname = "cosmic-ext-applet-feeds";
           version = "0.1.0";
           strictDeps = true;
 
@@ -66,14 +66,14 @@
 
         cargoArtifacts = craneLib.buildDepsOnly commonArgs;
 
-        cosmic-simple-feeds = craneLib.buildPackage (
+        cosmic-ext-applet-feeds = craneLib.buildPackage (
           commonArgs
           // {
             inherit cargoArtifacts;
 
             postInstall =
               let
-                appid = "com.github-marcossl10.cosmic-simple-feeds";
+                appid = "io.github-olafkfreund.cosmic-ext-applet-feeds";
               in
               ''
                 install -Dm0644 resources/app.desktop \
@@ -87,8 +87,8 @@
               '';
 
             meta = with pkgs.lib; {
-              description = "RSS feed applet for the COSMIC Desktop Environment";
-              homepage = "https://github.com/marcossl10/cosmic-simple-feeds";
+              description = "RSS feed reader applet for the COSMIC™ desktop";
+              homepage = "https://github.com/olafkfreund/cosmic-ext-simple-feeds";
               license = licenses.mit;
               platforms = platforms.linux;
               mainProgram = "feeds";
@@ -98,12 +98,12 @@
       in
       {
         packages = {
-          inherit cosmic-simple-feeds;
-          default = cosmic-simple-feeds;
+          inherit cosmic-ext-applet-feeds;
+          default = cosmic-ext-applet-feeds;
         };
 
         checks = {
-          inherit cosmic-simple-feeds;
+          inherit cosmic-ext-applet-feeds;
 
           clippy = craneLib.cargoClippy (
             commonArgs
@@ -139,7 +139,7 @@
     )
     // {
       overlays.default = final: _prev: {
-        cosmic-simple-feeds = self.packages.${final.system}.cosmic-simple-feeds;
+        cosmic-ext-applet-feeds = self.packages.${final.system}.cosmic-ext-applet-feeds;
       };
 
       nixosModules.default = import ./nix/module.nix self;

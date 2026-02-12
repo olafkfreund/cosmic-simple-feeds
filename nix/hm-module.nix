@@ -7,12 +7,12 @@ flake:
 }:
 
 let
-  cfg = config.programs.cosmic-simple-feeds;
+  cfg = config.programs.cosmic-ext-applet-feeds;
 
   # COSMIC config stores each field as a separate file in Ron format.
-  # App ID (dots): com.github.marcossl10.cosmic-simple-feeds
+  # App ID (dots): io.github.olafkfreund.cosmic-ext-applet-feeds
   # Config version: 3
-  configDir = "cosmic/com.github.marcossl10.cosmic-simple-feeds/v3";
+  configDir = "cosmic/io.github.olafkfreund.cosmic-ext-applet-feeds/v3";
 
   # Serialize a list of strings to Ron format: ["url1", "url2"]
   feedsToRon =
@@ -20,11 +20,11 @@ let
     "[${lib.concatMapStringsSep ", " (f: ''"${f}"'') feeds}]";
 in
 {
-  options.programs.cosmic-simple-feeds = {
-    enable = lib.mkEnableOption "COSMIC Simple Feeds RSS applet";
+  options.programs.cosmic-ext-applet-feeds = {
+    enable = lib.mkEnableOption "Feeds — RSS reader applet for the COSMIC™ desktop";
 
-    package = lib.mkPackageOption pkgs "cosmic-simple-feeds" {
-      default = flake.packages.${pkgs.stdenv.hostPlatform.system}.cosmic-simple-feeds;
+    package = lib.mkPackageOption pkgs "cosmic-ext-applet-feeds" {
+      default = flake.packages.${pkgs.stdenv.hostPlatform.system}.cosmic-ext-applet-feeds;
     };
 
     feeds = lib.mkOption {

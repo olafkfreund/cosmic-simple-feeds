@@ -71,7 +71,7 @@ pub fn validate_url(url: &str) -> Result<(), FeedError> {
 
 fn build_client() -> Result<reqwest::Client, FeedError> {
     reqwest::Client::builder()
-        .user_agent("cosmic-simple-feeds")
+        .user_agent("cosmic-ext-applet-feeds")
         .connect_timeout(CONNECT_TIMEOUT)
         .timeout(REQUEST_TIMEOUT)
         .redirect(reqwest::redirect::Policy::limited(5))

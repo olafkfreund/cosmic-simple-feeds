@@ -7,14 +7,14 @@ flake:
 }:
 
 let
-  cfg = config.programs.cosmic-simple-feeds;
+  cfg = config.programs.cosmic-ext-applet-feeds;
 in
 {
-  options.programs.cosmic-simple-feeds = {
-    enable = lib.mkEnableOption "COSMIC Simple Feeds RSS applet";
+  options.programs.cosmic-ext-applet-feeds = {
+    enable = lib.mkEnableOption "Feeds — RSS reader applet for the COSMIC™ desktop";
 
-    package = lib.mkPackageOption pkgs "cosmic-simple-feeds" {
-      default = flake.packages.${pkgs.stdenv.hostPlatform.system}.cosmic-simple-feeds;
+    package = lib.mkPackageOption pkgs "cosmic-ext-applet-feeds" {
+      default = flake.packages.${pkgs.stdenv.hostPlatform.system}.cosmic-ext-applet-feeds;
     };
   };
 

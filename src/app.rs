@@ -56,7 +56,7 @@ impl cosmic::Application for AppModel {
     type Flags = crate::config::Config;
     type Message = Message;
 
-    const APP_ID: &'static str = "com.github.marcossl10.cosmic-simple-feeds";
+    const APP_ID: &'static str = "io.github.olafkfreund.cosmic-ext-applet-feeds";
 
     fn init(core: Core, flags: crate::config::Config) -> (Self, Task<Message>) {
         let cosmic_cfg = cosmic::cosmic_config::Config::new(

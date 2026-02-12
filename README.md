@@ -1,9 +1,9 @@
-Feeds — COSMIC applet
-=====================
+Feeds — RSS reader applet for the COSMIC™ desktop
+==================================================
 
-A small COSMIC panel applet that fetches and displays RSS/Atom feed
-items. Uses `libcosmic` + `iced` for UI and `reqwest` + `rss` for
-network parsing.
+A small panel applet for the COSMIC™ desktop that fetches and displays
+RSS/Atom feed items. Uses `libcosmic` + `iced` for UI and `reqwest` +
+`rss` for network parsing.
 
 Features
 --------
@@ -26,7 +26,7 @@ Add the flake input to your `flake.nix`:
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    cosmic-simple-feeds.url = "github:marcossl10/cosmic-simple-feeds";
+    cosmic-ext-applet-feeds.url = "github:olafkfreund/cosmic-ext-simple-feeds";
   };
 }
 ```
@@ -37,13 +37,13 @@ Add the flake input to your `flake.nix`:
 # configuration.nix or a NixOS module
 { inputs, ... }:
 {
-  imports = [ inputs.cosmic-simple-feeds.nixosModules.default ];
+  imports = [ inputs.cosmic-ext-applet-feeds.nixosModules.default ];
 
   # Add the overlay so the package is available
-  nixpkgs.overlays = [ inputs.cosmic-simple-feeds.overlays.default ];
+  nixpkgs.overlays = [ inputs.cosmic-ext-applet-feeds.overlays.default ];
 
   # Enable the applet
-  programs.cosmic-simple-feeds.enable = true;
+  programs.cosmic-ext-applet-feeds.enable = true;
 }
 ```
 
@@ -53,12 +53,12 @@ Add the flake input to your `flake.nix`:
 # home.nix or a Home Manager module
 { inputs, ... }:
 {
-  imports = [ inputs.cosmic-simple-feeds.homeManagerModules.default ];
+  imports = [ inputs.cosmic-ext-applet-feeds.homeManagerModules.default ];
 
   # Add the overlay
-  nixpkgs.overlays = [ inputs.cosmic-simple-feeds.overlays.default ];
+  nixpkgs.overlays = [ inputs.cosmic-ext-applet-feeds.overlays.default ];
 
-  programs.cosmic-simple-feeds = {
+  programs.cosmic-ext-applet-feeds = {
     enable = true;
 
     # Declarative feed list (optional — can also manage from the UI)
@@ -77,7 +77,7 @@ Add the flake input to your `flake.nix`:
 #### Build only
 
 ```bash
-nix build github:marcossl10/cosmic-simple-feeds
+nix build github:olafkfreund/cosmic-ext-simple-feeds
 ./result/bin/feeds
 ```
 
@@ -100,8 +100,8 @@ System libraries:
 #### Build and install
 
 ```bash
-git clone https://github.com/marcossl10/cosmic-simple-feeds.git
-cd cosmic-simple-feeds
+git clone https://github.com/olafkfreund/cosmic-ext-simple-feeds.git
+cd cosmic-ext-simple-feeds
 just build-release
 sudo just install
 ```
@@ -114,7 +114,7 @@ Configuration
 The applet stores configuration via `cosmic-config` at:
 
 ```
-~/.config/cosmic/com.github.marcossl10.cosmic-simple-feeds/v3/
+~/.config/cosmic/io.github.olafkfreund.cosmic-ext-applet-feeds/v3/
 ```
 
 Each config field is a separate file in Ron (Rusty Object Notation) format:
